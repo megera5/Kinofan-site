@@ -26,7 +26,7 @@
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
     echo "Информация о местах: <br>";
 } catch (PDOException $e) {
-    echo "Ошибка подключения: " . $e->getMessage();
+    echo "Connection error: " . $e->getMessage();
 }
 
 $stmt_locat = $pdo->query("SELECT location.address, hall.hall_number, hall.hall_code
