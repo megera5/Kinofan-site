@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 $host = 'localhost';
 $dbname = 'f0945872_film';
