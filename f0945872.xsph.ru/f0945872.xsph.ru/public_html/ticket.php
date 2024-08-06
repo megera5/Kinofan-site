@@ -16,17 +16,14 @@
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
 
-        $host = 'localhost';
-        $dbname = 'f0945872_film';
-        $user = 'f0945872_film';
-        $password = 'Annamart05!';
+        include 'config.php';
         
        try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
-    echo "Информация о билетах: <br>";
-} catch (PDOException $e) {
-    echo "Ошибка подключения: " . $e->getMessage();
-}
+            $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
+            echo "Информация о билетах: <br>";
+        } catch (PDOException $e) {
+            echo "Ошибка подключения: " . $e->getMessage();
+        }
         $stmt_session = $pdo->query("SELECT event.event_name, session.date, session.time, session.basic_cost
                     FROM session 
                     JOIN event ON session.event_code = event.event_code");

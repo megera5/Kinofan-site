@@ -17,41 +17,38 @@
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
 
-        $host = 'localhost';
-        $dbname = 'f0945872_film';
-        $user = 'f0945872_film';
-        $password = 'Annamart05!';
+        include 'config.php';
         
        try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
-    echo "Информация о местах: <br>";
-} catch (PDOException $e) {
-    echo "Connection error: " . $e->getMessage();
-}
+            $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
+            echo "Информация о местах: <br>";
+        } catch (PDOException $e) {
+            echo "Connection error: " . $e->getMessage();
+        }
 
-$stmt_locat = $pdo->query("SELECT location.address, hall.hall_number, hall.hall_code
-FROM hall 
-JOIN location ON hall.location_code = location.location_code");
+        $stmt_locat = $pdo->query("SELECT location.address, hall.hall_number, hall.hall_code
+                FROM hall 
+                JOIN location ON hall.location_code = location.location_code");
 
-$stmt_halls = $pdo->query("SELECT row.row_number, hall.hall_number, hall.hall_code, row.row_code
-FROM row 
-LEFT JOIN hall ON row.hall_code = hall.hall_code")->fetchAll();
+        $stmt_halls = $pdo->query("SELECT row.row_number, hall.hall_number, hall.hall_code, row.row_code
+                FROM row 
+                LEFT JOIN hall ON row.hall_code = hall.hall_code")->fetchAll();
 
-$stmt_row = $pdo->query("SELECT place.place_number, place.ratio, row.row_code
-FROM place
-LEFT JOIN row ON place.row_code = row.row_code")->fetchAll();
+        $stmt_row = $pdo->query("SELECT place.place_number, place.ratio, row.row_code
+                FROM place
+                LEFT JOIN row ON place.row_code = row.row_code")->fetchAll();
 
-while ($row = $stmt_locat->fetch()) {
-    echo "<tr><td>".$row['address']."</td><td>".$row['hall_number']."</td>";
-    $hall_code = $row['hall_code'];
+        while ($row = $stmt_locat->fetch()) {
+            echo "<tr><td>".$row['address']."</td><td>".$row['hall_number']."</td>";
+            $hall_code = $row['hall_code'];
 
-    $filtered_halls = array_filter($stmt_halls, function($item) use ($hall_code) {
-        return $item['hall_code'] == $hall_code;
-    });
+        $filtered_halls = array_filter($stmt_halls, function($item) use ($hall_code) {
+            return $item['hall_code'] == $hall_code;
+        });
 
-    foreach ($filtered_halls as $row2) {
-        echo "<td>".$row2['row_number']."</td>";
-        $row_code = $row2['row_code'];
+        foreach ($filtered_halls as $row2) {
+            echo "<td>".$row2['row_number']."</td>";
+            $row_code = $row2['row_code'];
 
         $filtered_rows = array_filter($stmt_row, function($item) use ($row_code) {
             return $item['row_code'] == $row_code;

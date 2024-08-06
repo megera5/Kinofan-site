@@ -16,10 +16,7 @@
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
 
-        $host = 'localhost';
-        $dbname = 'f0945872_film';
-        $user = 'f0945872_film';
-        $password = 'Annamart05!';
+        include 'config.php';
         
         try {
             $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);

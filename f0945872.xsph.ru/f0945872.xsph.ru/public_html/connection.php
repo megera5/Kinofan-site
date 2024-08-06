@@ -7,10 +7,7 @@
 </head>
 <body>
 <?php
-$host = 'localhost';
-$dbname = 'f0945872_film';
-$user = 'f0945872_film';
-$password = 'Annamart05!';
+include 'config.php';
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
     echo "Подключение успешно";
